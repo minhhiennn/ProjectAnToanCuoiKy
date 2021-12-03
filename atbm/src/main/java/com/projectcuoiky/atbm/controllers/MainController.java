@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
+    
     @RequestMapping(value = {"", "/", "home"})
     public String Home() {
         return "index";
@@ -15,4 +16,15 @@ public class MainController {
     public String CartItemList() {
         return "cart";
     }
+
+    @RequestMapping("/signup")
+    public String signUp() {
+        return "signup";
+    }
+
+    @RequestMapping("/signin")
+    public String signIn() {
+        return "signin";
+    }
+
 }
