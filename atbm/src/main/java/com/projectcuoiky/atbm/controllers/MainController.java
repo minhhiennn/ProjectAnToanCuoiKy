@@ -9,31 +9,31 @@ public class MainController {
 
     @RequestMapping(value = {"", "/", "home"})
     public String Home() {
-        return "index";
+        return "views/Home";
     }
 
     @RequestMapping("/cart")
     public String CartItemList() {
-        return "cart";
+        return "views/Cart";
     }
 
     @RequestMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "views/Signup";
     }
 
     @RequestMapping("/signin")
     public String signIn() {
-        return "signin";
+        return "views/Signin";
     }
 
     @RequestMapping("/productDetail")
     public String productDetail() {
-        return "product-detail";
+        return "views/product-detail";
     }
 
-    @RequestMapping("/shop-list-full")
+    @RequestMapping("/shop")
     public String shopListFull() {
-        return "shop-list-full";
+        return "views/Shop";
     }
 }
