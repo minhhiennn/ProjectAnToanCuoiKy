@@ -5,11 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//@PreAuthorize("isAuthenticated()")
+//   @PreAuthorize("isAuthenticated()")
 public class MainController {
 
     @PreAuthorize("hasRole('ROLE_User')")
-    @RequestMapping(value = { "/", "home"})
+    @RequestMapping(value = { "/", "home"   })
     public String Home() {
         return "views/Home";
     }
@@ -43,5 +43,10 @@ public class MainController {
     public String shopListFull() {
         return "views/Shop";
     }
-
+    
+    @RequestMapping("/access-denied")
+    public String getAccessDenied() {
+        return "views/404";
+    }
+    
 }
