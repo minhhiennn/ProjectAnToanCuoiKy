@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@PreAuthorize("isAuthenticated()")
 public class MainController {
 
-    @PreAuthorize("hasRole('ROLE_User')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = { "/", "home"})
     public String Home() {
         return "views/Home";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_User','ROLE_Admin')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/cart")
     public String CartItemList() {
         return "views/Cart";
@@ -32,13 +32,13 @@ public class MainController {
         return "views/Signin";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_User','ROLE_Admin')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/productDetail")
     public String productDetail() {
         return "views/product-detail";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_User','ROLE_Admin')")
+    @PreAuthorize("hasAnyRole('ROLE_User','ROLE_ADMIN')")
     @RequestMapping("/shop")
     public String shopListFull() {
         return "views/Shop";
