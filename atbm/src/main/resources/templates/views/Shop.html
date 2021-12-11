@@ -69,9 +69,10 @@
                                 </div>
 
                                 <!-- product -->
-                                <div class="shop-p__collection" th:each="product,state :${listProducts}">
+                                <div class="shop-p__collection">
                                     <div class="row is-list-active">
-                                        <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="col-lg-3 col-md-4 col-sm-6"
+                                            th:each="product,state :${listProducts}">
                                             <div class="product-m">
                                                 <div class="product-m__thumb">
 
