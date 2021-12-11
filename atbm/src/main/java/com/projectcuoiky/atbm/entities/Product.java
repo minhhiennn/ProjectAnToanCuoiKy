@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "product_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private int id;
 
     @NotNull(message = "trường này không được để trống")
