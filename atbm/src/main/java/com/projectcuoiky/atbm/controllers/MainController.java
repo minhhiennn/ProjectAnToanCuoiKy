@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -41,17 +42,24 @@ public class MainController {
         return "views/Signin";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @RequestMapping("/productDetail")
-    public String productDetail() {
+    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    // @RequestMapping("/productDetail")
+    // public String productDetail() {
+    //     return "views/product-detail";
+    // }
+    @RequestMapping("/productDetail/{productId}")
+    public String productDetail(@PathVariable String productId, Model model) {
+        Product product = productService.findProductById(Integer.parseInt(productId));
+
+        model.addAttribute("product", product);
         return "views/product-detail";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
     public String shopListFull(Model model) {
         List<Product> list=productService.getAllProduct();
-        model.addAttribute("listProducts",list);//tuoi loz
+        model.addAttribute("listProducts",list);
         System.out.println(list);
         return "views/Shop";
     }

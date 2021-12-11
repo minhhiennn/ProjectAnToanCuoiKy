@@ -19,4 +19,9 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
+    public Product findProductById(Integer id) {
+        Product product = productRepository.findProductById(id);
+        return product;
+    }
+    
 }
