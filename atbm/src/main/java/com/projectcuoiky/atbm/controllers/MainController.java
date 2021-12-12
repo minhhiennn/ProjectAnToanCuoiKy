@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//@PreAuthorize("isAuthenticated()")
+// @PreAuthorize("isAuthenticated()")
 public class MainController {
     @Autowired
     private ProductService productService;
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping(value = { "/", "home"})
+    @RequestMapping(value = { "/", "home" })
     public String Home() {
         return "views/Home";
     }
@@ -43,10 +43,6 @@ public class MainController {
     }
 
     // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    // @RequestMapping("/productDetail")
-    // public String productDetail() {
-    //     return "views/product-detail";
-    // }
     @RequestMapping("/productDetail/{productId}")
     public String productDetail(@PathVariable String productId, Model model) {
         Product product = productService.findProductById(Integer.parseInt(productId));
@@ -58,8 +54,8 @@ public class MainController {
     // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
     public String shopListFull(Model model) {
-        List<Product> list=productService.getAllProduct();
-        model.addAttribute("listProducts",list);
+        List<Product> list = productService.getAllProduct();
+        model.addAttribute("listProducts", list);
         System.out.println(list);
         return "views/Shop";
     }
