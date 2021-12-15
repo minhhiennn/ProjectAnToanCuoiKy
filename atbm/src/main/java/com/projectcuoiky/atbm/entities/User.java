@@ -12,19 +12,27 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
     @Column(name = "email", nullable = false, unique = true)
-    private String email;
+    public String email;
 
     @Column(name = "password", nullable = false)
-    private String password;
+    public String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    public User() {
+    }
+
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -58,4 +66,31 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

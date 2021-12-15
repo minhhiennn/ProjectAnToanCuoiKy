@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class UsersService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String e) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(e);
         if (user == null) {
@@ -34,18 +36,6 @@ public class UsersService implements UserDetailsService {
         for (Role role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.email, user.password,user.isEnabled(),true,true,true,grantedAuthorities);
     }
-//    private List<GrantedAuthority> getAuthorities(boolean isAdmin){
-//
-//        List<GrantedAuthority> authorityList = new ArrayList<GrantedAuthority>(2);
-//        authorityList.add(new SimpleGrantedAuthority("USER_ROLE"));
-//        if(isAdmin){
-//            authorityList.add(new SimpleGrantedAuthority("ADMIN_ROLE"));
-//        }
-//        return authorityList;
-//
-//    }
 }
