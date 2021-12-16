@@ -1,8 +1,5 @@
 package com.projectcuoiky.atbm.entities;
 
-<<<<<<< HEAD
-import javax.persistence.*;
-=======
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
->>>>>>> f97533d3e0543594be3e758e2b254d933443494f
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
