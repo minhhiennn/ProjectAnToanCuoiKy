@@ -82,7 +82,7 @@ public class MainController {
         return "views/product-detail";
     }
 
-    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
     // public String shopListFull(Model model) {
     // List<Product> list = productService.getAllProduct();
