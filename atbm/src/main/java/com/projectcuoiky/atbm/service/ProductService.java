@@ -20,8 +20,32 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         return this.productRepository.findAll();
     }
 
+    public List<Product> getAllListProductByPage(int page, int size, String sortName, boolean desc) {
+        List<Product> productList;
+        Pageable paging = null;
+        if (sortName == null) {
+            paging = PageRequest.of(page, size);
+        } else if (sortName != null & desc == false) {
+            paging = PageRequest.of(page, size, Sort.by(sortName));
+        } else if (sortName != null & desc == true) {
+            paging = PageRequest.of(page, size, Sort.by(sortName).descending());
+        }
+        Page<Product> pageProducts = productRepository.findAll(paging);
+        productList = pageProducts.getContent();
+        return productList;
+    }
+
+    public int getMaxPage(int size) {
+        int countAllProduct = productRepository.findAll().size();
+        if (countAllProduct % size == 0) {
+            return (countAllProduct / size);
+        } else {
+            return (countAllProduct / size) + 1;
+        }
+    }
+    
 }

@@ -81,38 +81,38 @@ public class MainController {
 
     // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
-    public String shopListFull(Model model) {
-        List<Product> list = productService.getAllProduct();
-        model.addAttribute("listProducts", list);//tuoi loz
-        System.out.println(list);
-        return "views/Shop1";
-    }
-    // public String shopPage(Model model, @RequestParam(required = false, name = "page") String Spage,
-    //                        @RequestParam(required = false, name = "size") String Ssize,
-    //                        @RequestParam(required = false, name = "sortBy") String sortBy,
-    //                        @RequestParam(required = false, name = "desc") String Sdesc) {
-    //     try {
-    //         int page = (Spage == null ? 1 : Integer.parseInt(Spage));
-    //         int size = (Ssize == null ? 12 : Integer.parseInt(Ssize));
-    //         boolean desc = ((Sdesc != null && Sdesc.contains("true")) ? true : false);
-    //         List<Product> listProducts = productService.getAllListProductByPage((page - 1), size, sortBy, desc);
-    //         List<ProductDto> dtos = new ArrayList<>();
-
-    //         for (Product product : listProducts) {
-    //             dtos.add(new ProductDto(product.getId(), product.getName(), product.getPrice(),
-    //                     product.getDiscountPrice(), product.getInStock()));
-    //         }
-    //         model.addAttribute("listProducts", dtos);
-    //         model.addAttribute("pageMax", productService.getMaxPage(size));
-    //         model.addAttribute("currentPage", page);
-    //         model.addAttribute("shows", size);
-    //         model.addAttribute("sortBy", (sortBy != null ? sortBy : "id"));
-    //         model.addAttribute("desc", String.valueOf(desc));
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    //     return "views/Shop";
+    // public String shopListFull(Model model) {
+    //     List<Product> list = productService.getAllProduct();
+    //     model.addAttribute("listProducts", list);//tuoi loz
+    //     System.out.println(list);
+    //     return "views/Shop1";
     // }
+    public String shopPage(Model model, @RequestParam(required = false, name = "page") String Spage,
+                           @RequestParam(required = false, name = "size") String Ssize,
+                           @RequestParam(required = false, name = "sortBy") String sortBy,
+                           @RequestParam(required = false, name = "desc") String Sdesc) {
+        try {
+            int page = (Spage == null ? 1 : Integer.parseInt(Spage));
+            int size = (Ssize == null ? 12 : Integer.parseInt(Ssize));
+            boolean desc = ((Sdesc != null && Sdesc.contains("true")) ? true : false);
+            List<Product> listProducts = productService.getAllListProductByPage((page - 1), size, sortBy, desc);
+            List<ProductDto> dtos = new ArrayList<>();
+
+            for (Product product : listProducts) {
+                dtos.add(new ProductDto(product.getId(), product.getName(), product.getPrice(),
+                        product.getDiscountPrice(), product.getInStock()));
+            }
+            model.addAttribute("listProducts", dtos);
+            model.addAttribute("pageMax", productService.getMaxPage(size));
+            model.addAttribute("currentPage", page);
+            model.addAttribute("shows", size);
+            model.addAttribute("sortBy", (sortBy != null ? sortBy : "id"));
+            model.addAttribute("desc", String.valueOf(desc));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "views/Shop";
+    }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/verify")
