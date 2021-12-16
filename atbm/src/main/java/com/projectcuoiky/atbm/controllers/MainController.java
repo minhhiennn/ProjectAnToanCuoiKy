@@ -17,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+=======
+import org.springframework.web.bind.annotation.PathVariable;
+>>>>>>> f97533d3e0543594be3e758e2b254d933443494f
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,14 +80,18 @@ public class MainController {
         return "views/Signin";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    @RequestMapping("/productDetail")
-    public String productDetail() {
+    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @RequestMapping("/productDetail/{productId}")
+    public String productDetail(@PathVariable String productId, Model model) {
+        Product product = productService.findProductById(Integer.parseInt(productId));
+
+        model.addAttribute("product", product);
         return "views/product-detail";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
+<<<<<<< HEAD
     // public String shopListFull(Model model) {
     // List<Product> list = productService.getAllProduct();
     // model.addAttribute("listProducts", list);//tuoi loz
@@ -114,6 +122,12 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+=======
+    public String shopListFull(Model model) {
+        List<Product> list = productService.getAllProduct();
+        model.addAttribute("listProducts", list);
+        System.out.println(list);
+>>>>>>> f97533d3e0543594be3e758e2b254d933443494f
         return "views/Shop";
     }
 
