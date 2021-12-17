@@ -32,6 +32,139 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+<!-- Giờ tất cả các file js tự tạo nằm ở folder js/customJs.js   -->
+<script th:inline="javascript">
+
+    function callPostMethodNoReresh(ele) {
+        let listParam = ele.dataset.parameter2;
+        let url = ele.dataset.parameter1;
+        // ấn vô thanh giảm số lượng
+        let minus = ele.dataset.parameter3 != undefined ? ele.dataset.parameter3 : undefined;
+        // ấn vô thanh giảm số lượng mà quantity <= 1 thì không xảy ra gì
+        let quantity = ele.dataset.parameter4 ? ele.dataset.parameter4 : undefined;
+        let listParamReal = listParam.replace("[", "").replace("]", "").replace(" ", "").split(",");
+        let map = {};
+        listParamReal.forEach(element => {
+            map[element.split("-")[0]] = element.split("-")[1];
+        });
+
+        if (quantity != undefined && quantity <= 1) {
+            return;
+        }
+
+        if (minus != undefined) {
+            map['minus'] = "true";
+        }
+
+        callAjaxPromise(url, map).done(function (response, status, jqXHR) {
+            let x = document.getElementsByClassName('preloader')[0];
+            x.classList.add('is-active');
+            if (status == 'success') {
+                callAjaxPromise('getCartItemList', null).done(function (response, status, jqXHR) {
+                    if (status == 'success') {
+                        JSON.parse(response).forEach(element => {
+                            if (document.getElementById(`miniCart${element.id}`) != null) {
+                                document.getElementById(`miniCartQuantity${element.id}`).innerHTML = element.quantity;
+                                document.getElementById(`miniCartPrice${element.id}`).innerHTML = `$${element.quantity * element.product.price}`
+                            }
+
+                            if (document.getElementById(`cartModule${element.id}`) != null) {
+                                document.getElementById(`cartModulePrice${element.id}`).innerHTML = `$${element.quantity * element.product.price}`
+                            }
+                        });
+                        setTimeout(() => {
+                            x.classList.remove('is-active')
+                        }, 500);
+                    }
+                })
+            }
+        });
+    }
+
+    // function callPostMethodReresh(ele) {
+    //     let listParamReal = listParam.replace("[", "").replace("]", "").replace(" ", "").split(",");
+    //     let map = {};
+    //     listParamReal.forEach(element => {
+    //         map[element.split("-")[0]] = element.split("-")[1];
+    //     });
+    //     $.ajax({
+    //         type: "POST",
+    //         url: url,
+    //         async: false,
+    //         data: map,
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             location.reload();
+    //         }
+    //     });
+    // }
+
+    function function1(ele) {
+        console.log(ele);
+        let productID = ele.dataset.parameter1;
+        console.log(productID)
+
+        let listProduct = [[${ listProducts }]];
+
+        for (const element of listProduct) {
+            if (element.id == productID) {
+                let modelquicklookname = document.getElementById('modelquicklookname');
+                let modelquicklookprice = document.getElementById('modelquicklookprice');
+
+                modelquicklookname.innerHTML = element.name;
+                modelquicklookprice.innerHTML = element.price;
+                break;
+            }
+        }
+    }
+
+
+    function changeSize(selectObject) {
+        let size = selectObject.value;
+        let soryBy = [[${ sortBy }]];
+        let desc = [[${ desc }]];
+        window.location.href = "/shop?page=" + 1 + "&size=" + size + "&sortBy=" + soryBy + "&desc=" + desc;
+    }
+
+    function changeSort(selectObject) {
+        let sortInfo = selectObject.value;
+        let size = [[${ shows }]];
+        let page = [[${ currentPage }]];
+        if (sortInfo.includes('desc')) {
+            window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo.split('_')[0] + "&desc=true";
+        } else {
+            window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo + "&desc=false";
+        }
+    }
+
+    function callAjaxPromise(url, map) {
+        let x = $.ajax({
+            type: "GET",
+            url: url,
+            data: map,
+            dataType: "text"
+        });
+        return x.promise();
+    }
+
+    function removeCart(element){
+        let productID = element.dataset.parameter2;
+        let cartID = element.dataset.parameter1;
+        $.get("removeToCart", {'cartID': cartID, 'productID': productID}, 
+        function(response){
+            console.log(response);
+            if (document.getElementById(`cartModule${response}`) != null) {
+                    document.getElementById(`cartModule${response}`).remove()
+            }
+        }, 'text');
+    }
+
+    function clearCart(){
+        
+    }
+
+</script>
+
 <th:block layout:fragment="script"></th:block>
 <!--====== Noscript ======-->
 <noscript>
