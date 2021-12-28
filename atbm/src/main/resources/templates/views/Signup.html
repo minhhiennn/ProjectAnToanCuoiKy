@@ -221,16 +221,12 @@
 
         // this is the id of the form
         $("#myForm").submit(function (e) {
-            console.log('begin');
             let x = (checkValidEmail() && checkValidPassword());
             if (x == false) {
                 e.preventDefault();
                 alert("nhập như cc người ta");
                 return;
             }
-
-            console.log('submit');
-
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var form = $(this);

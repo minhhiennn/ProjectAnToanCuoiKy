@@ -1,6 +1,5 @@
 package com.projectcuoiky.atbm.security;
 
-import com.projectcuoiky.atbm.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,30 +12,46 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    AuthenticationSuccessWithSessionHandler successHandler = new AuthenticationSuccessWithSessionHandler();
+
     @Autowired
     @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .requiresChannel(channel ->
+//                        channel.anyRequest().requiresSecure())
+//                .authorizeRequests(authorize ->
+//                        authorize.anyRequest().permitAll())
+//                .build();
+//    }
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.requiresChannel(channel ->
+                        channel.anyRequest().requiresSecure())
+                .authorizeRequests()
                 .and()
                 .formLogin()
-                .loginPage("/signin").permitAll()
+                .loginPage("/signin").permitAll().successHandler(successHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/home")
                 .loginProcessingUrl("/signin")
                 .failureUrl("/signin?error==true")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
+                .logoutSuccessHandler(successHandler)
+                .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .and()
                 .exceptionHandling().accessDeniedPage("/accessDenied");
@@ -47,13 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("User")
-//                .and()
-//                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("Admin");
-//    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

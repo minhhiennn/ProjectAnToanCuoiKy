@@ -82,45 +82,6 @@
             });
         }
 
-
-        function function1(ele) {
-            console.log(ele);
-            let productID = ele.dataset.parameter1;
-            console.log(productID)
-
-            let listProduct = [[${ listProducts }]];
-
-            for (const element of listProduct) {
-                if (element.id == productID) {
-                    let modelquicklookname = document.getElementById('modelquicklookname');
-                    let modelquicklookprice = document.getElementById('modelquicklookprice');
-
-                    modelquicklookname.innerHTML = element.name;
-                    modelquicklookprice.innerHTML = element.price;
-                    break;
-                }
-            }
-        }
-
-
-        function changeSize(selectObject) {
-            let size = selectObject.value;
-            let soryBy = [[${ sortBy }]];
-            let desc = [[${ desc }]];
-            window.location.href = "/shop?page=" + 1 + "&size=" + size + "&sortBy=" + soryBy + "&desc=" + desc;
-        }
-
-        function changeSort(selectObject) {
-            let sortInfo = selectObject.value;
-            let size = [[${ shows }]];
-            let page = [[${ currentPage }]];
-            if (sortInfo.includes('desc')) {
-                window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo.split('_')[0] + "&desc=true";
-            } else {
-                window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo + "&desc=false";
-            }
-        }
-
         function callAjaxPromise(url, map) {
             let x = $.ajax({
                 type: "GET",

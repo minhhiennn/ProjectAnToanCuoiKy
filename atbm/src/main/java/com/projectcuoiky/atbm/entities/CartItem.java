@@ -34,6 +34,16 @@ public class CartItem {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
+    public CartItem() {
+    }
+
+    public CartItem(int id, Product product, @NotNull int quantity, User user) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }
@@ -63,16 +73,6 @@ public class CartItem {
     }
 
     public void setUser(User user) {
-        this.user = user;
-    }
-
-    public CartItem() {
-    }
-
-    public CartItem(int id, Product product, @NotNull int quantity, User user) {
-        this.id = id;
-        this.product = product;
-        this.quantity = quantity;
         this.user = user;
     }
 

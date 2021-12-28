@@ -1,145 +1,228 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/_layout}">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/_layout}">
 
 <head th:replace="fragments/head :: head(titleText='Shop')"></head>
 
 <body>
-    <div layout:fragment="content">
-        <!--====== App Content ======-->
-        <div class="app-content">
+<div layout:fragment="content">
+    <!--====== App Content ======-->
+    <div class="app-content">
 
-            <!--====== Section 1 ======-->
-            <div class="u-s-p-y-90">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="shop-p">
-                                <div class="shop-p__toolbar u-s-m-b-30">
-                                    <div class="shop-p__meta-wrap u-s-m-b-60">
+        <!--====== Section 1 ======-->
+        <div class="u-s-p-y-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shop-p">
+                            <div class="shop-p__toolbar u-s-m-b-30">
+                                <div class="shop-p__meta-wrap u-s-m-b-60">
 
-                                        <span class="shop-p__meta-text-1">FOUND 18 RESULTS</span>
-                                        <div class="shop-p__meta-text-2">
+                                    <span class="shop-p__meta-text-1">FOUND 18 RESULTS</span>
+                                    <div class="shop-p__meta-text-2">
 
-                                            <span>Related Searches:</span>
+                                        <span>Related Searches:</span>
 
-                                            <a class="gl-tag btn--e-brand-shadow" href="#">men's clothing</a>
+                                        <a class="gl-tag btn--e-brand-shadow" href="#">men's clothing</a>
 
-                                            <a class="gl-tag btn--e-brand-shadow" href="#">mobiles & tablets</a>
+                                        <a class="gl-tag btn--e-brand-shadow" href="#">mobiles & tablets</a>
 
-                                            <a class="gl-tag btn--e-brand-shadow" href="#">books & audible</a>
-                                        </div>
-                                    </div>
-                                    <div class="shop-p__tool-style">
-                                        <div class="tool-style__group u-s-m-b-8">
-
-                                            <span class="js-shop-filter-target" data-side="#side-filter">Filters</span>
-
-                                            <span class="js-shop-grid-target is-active">Grid</span>
-
-                                            <span class="js-shop-list-target">List</span>
-                                        </div>
-                                        <form>
-                                            <div class="tool-style__form-wrap">
-                                                <div class="u-s-m-b-8"><select onchange="changeSize(this)" class="select-box select-box--transparent-b-2">
-                                                        <option th:attr="selected=${shows==8}? 'selected' " th:value="8" th:text="'Show: 8'"></option>
-                                                        <option th:attr="selected=${shows==12}? 'selected' " th:value="12" th:text="'Show: 12'"></option>
-                                                        <option th:attr="selected=${shows==16}? 'selected' " th:value="16" th:text="'Show: 16'"></option>
-                                                        <option th:attr="selected=${shows==28}? 'selected' " th:value="28" th:text="'Show: 28'"></option>
-                                                    </select></div>
-                                                <div class="u-s-m-b-8"><select onchange="changeSort(this)" class="select-box select-box--transparent-b-2">
-                                                        <option th:attr="selected=${(sortBy.equals('id') && desc.equals('true'))}? 'selected' " th:value="'id_desc'" th:text="'Sort By: Newest Items'">
-                                                        </option>
-                                                        <option th:attr="selected=${(sortBy.equals('id') && desc.equals('false'))}? 'selected' " th:value="'id'" th:text="'Sort By: Latest Items'">
-                                                        </option>
-                                                        <option th:attr="selected=${(sortBy.equals('id3') && desc.equals('true'))}? 'selected' " th:value="'id'" th:text="'Sort By: Best Selling'">
-                                                        </option>
-                                                        <option th:attr="selected=${(sortBy.equals('id3') && desc.equals('true'))}? 'selected' " th:value="'id'" th:text="'Sort By: Best Rating'">
-                                                        </option>
-                                                        <option th:attr="selected=${(sortBy.equals('price') && desc.equals('false'))} ? 'selected' " th:value="'price'" th:text="'Sort By: Lowest Price'">
-                                                        </option>
-                                                        <option th:attr="selected=${(sortBy.equals('price') && desc.equals('true'))} ? 'selected' " th:value="'price_desc'" th:text="'Sort By: Highest Price'">
-                                                        </option>
-                                                    </select></div>
-                                            </div>
-                                        </form>
+                                        <a class="gl-tag btn--e-brand-shadow" href="#">books & audible</a>
                                     </div>
                                 </div>
-                                <div class="shop-p__collection">
-                                    <div class="row is-grid-active">
-                                        <div class="col-lg-3 col-md-4 col-sm-6" th:each="product,state :${listProducts}">
-                                            <div class="product-m">
-                                                <div class="product-m__thumb">
-                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" th:href="@{/productDetail/{productId}(productId=${product.getId()})}">
-                                                        <img class="aspect__img" src="images/product/men/product6.jpg" alt=""></a>
-                                                    <div class="product-m__quick-look">
-                                                        <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look" th:data-parameter1="${product.getId()}" onclick="function1(this);"></a>
-                                                    </div>
-                                                    <!-- <form th:id="${product.id}" th:action=" @{/addToCart}" method="POST">
-                                                        <input type="hidden" name="productID" id="productID" th:value="${product.id}" />
+                                <div class="shop-p__tool-style">
+                                    <div class="tool-style__group u-s-m-b-8">
 
-                                                    </form> -->
+                                        <span class="js-shop-filter-target" data-side="#side-filter">Filters</span>
 
-                                                    <div class="product-m__add-cart" th:with="strList = ${ {'productID-'+product.id} }">
-                                                        <!-- <a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart" th:onclick="'document.getElementById(\'' + ${product.id} + '\').submit();'">Add to Cart</a> -->
-                                                        <a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart" th:data-parameter1="addToCart" th:data-parameter2="${strList}" th:onclick="'callPostMethodNoReresh(this)'">Add to Cart</a>
-                                                        <!-- <input type="text" class="order-entry" id="ID" placeholder="" th:value="${''}" /> -->
+                                        <span class="js-shop-grid-target is-active">Grid</span>
 
-                                                    </div>
+                                        <span class="js-shop-list-target">List</span>
+                                    </div>
+                                    <form>
+                                        <div class="tool-style__form-wrap">
+                                            <div class="u-s-m-b-8"><select onchange="changeSize(this)"
+                                                                           class="select-box select-box--transparent-b-2">
+                                                <option th:attr="selected=${shows==8}? 'selected' " th:value="8"
+                                                        th:text="'Show: 8'"></option>
+                                                <option th:attr="selected=${shows==12}? 'selected' " th:value="12"
+                                                        th:text="'Show: 12'"></option>
+                                                <option th:attr="selected=${shows==16}? 'selected' " th:value="16"
+                                                        th:text="'Show: 16'"></option>
+                                                <option th:attr="selected=${shows==28}? 'selected' " th:value="28"
+                                                        th:text="'Show: 28'"></option>
+                                            </select></div>
+                                            <div class="u-s-m-b-8"><select onchange="changeSort(this)"
+                                                                           class="select-box select-box--transparent-b-2">
+                                                <option th:attr="selected=${(sortBy.equals('id') && desc.equals('true'))}? 'selected' "
+                                                        th:value="'id_desc'" th:text="'Sort By: Newest Items'">
+                                                </option>
+                                                <option th:attr="selected=${(sortBy.equals('id') && desc.equals('false'))}? 'selected' "
+                                                        th:value="'id'" th:text="'Sort By: Latest Items'">
+                                                </option>
+                                                <option th:attr="selected=${(sortBy.equals('id3') && desc.equals('true'))}? 'selected' "
+                                                        th:value="'id'" th:text="'Sort By: Best Selling'">
+                                                </option>
+                                                <option th:attr="selected=${(sortBy.equals('id3') && desc.equals('true'))}? 'selected' "
+                                                        th:value="'id'" th:text="'Sort By: Best Rating'">
+                                                </option>
+                                                <option th:attr="selected=${(sortBy.equals('price') && desc.equals('false'))} ? 'selected' "
+                                                        th:value="'price'" th:text="'Sort By: Lowest Price'">
+                                                </option>
+                                                <option th:attr="selected=${(sortBy.equals('price') && desc.equals('true'))} ? 'selected' "
+                                                        th:value="'price_desc'" th:text="'Sort By: Highest Price'">
+                                                </option>
+                                            </select></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="shop-p__collection">
+                                <div class="row is-grid-active">
+                                    <div class="col-lg-3 col-md-4 col-sm-6" th:each="product,state :${listProducts}">
+                                        <div class="product-m">
+                                            <div class="product-m__thumb">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                                   th:href="@{/productDetail/{productId}(productId=${product.getId()})}">
+                                                    <img class="aspect__img" src="images/product/men/product6.jpg"
+                                                         alt=""></a>
+                                                <div class="product-m__quick-look">
+                                                    <a class="fas fa-search" data-modal="modal"
+                                                       data-modal-id="#quick-look" data-tooltip="tooltip"
+                                                       data-placement="top" title="Quick Look"
+                                                       th:data-parameter1="${product.getId()}"
+                                                       onclick="function1(this);"></a>
                                                 </div>
-                                                <div class="product-m__content">
-                                                    <div class="product-m__category">
-                                                        <h5>
-                                                            <a href="#" th:href="@{/productDetail/{productId}(productId=${product.getId()})}" th:text="${product.getName()}"></a>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="product-m__name">
 
-                                                        <a href="#" th:text="${product.getId()}"></a>
-                                                    </div>
-                                                    <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-
-                                                        <span class="product-m__review">(23)</span>
-                                                    </div>
-                                                    <div class="product-m__price" th:text="${'$ '+product.getPrice()}"></div>
-                                                    <div class="product-m__hover">
-                                                        <div class="product-m__preview-description">
-
-                                                            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
-                                                        </div>
-                                                        <div class="product-m__wishlist">
-
-                                                            <a class="far fa-heart" href="#" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"></a>
-                                                        </div>
-                                                    </div>
+                                                <div class="product-m__add-cart">
+                                                    <a class="btn--e-brand" data-modal="modal"
+                                                       data-modal-id="#add-to-cart"
+                                                       th:attr="data-productid=${product.getId()}"
+                                                       onclick="addToCart(this)">Add to Cart</a>
                                                 </div>
                                             </div>
+                                            <div class="product-m__content">
+                                                <div class="product-m__category">
+                                                    <h5>
+                                                        <a href="#"
+                                                           th:href="@{/productDetail/{productId}(productId=${product.getId()})}"
+                                                           th:text="${product.getName()}"></a>
+                                                    </h5>
+                                                </div>
+                                                <div class="product-m__name">
+
+                                                    <a href="#" th:text="${product.getId()}"></a>
+                                                </div>
+                                                <div class="product-m__rating gl-rating-style"><i
+                                                        class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                                        class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i
+                                                        class="far fa-star"></i>
+
+                                                    <span class="product-m__review">(23)</span>
+                                                </div>
+                                                <div class="product-m__price"
+                                                     th:text="${'$ '+product.getPrice()}"></div>
+                                                <div class="product-m__hover">
+                                                    <div class="product-m__preview-description">
+
+                                                        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
+                                                    </div>
+                                                    <div class="product-m__wishlist">
+
+                                                        <a class="far fa-heart" href="#" data-tooltip="tooltip"
+                                                           data-placement="top" title="Add to Wishlist"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-
                                     </div>
-                                </div>
-                                <div class="u-s-p-y-60">
 
-                                    <!--====== Pagination ======-->
-                                    <ul class="shop-p__pagination">
-                                        <li th:each="page: ${#numbers.sequence(1, pageMax)}" th:attr="class=${currentPage == page ? 'is-active' : ''}">
-                                            <a th:href="@{'/shop?page='+${page}+'&size='+${shows}+'&sortBy='+${sortBy}+'&desc='+${desc}}" th:text="${page}"></a>
-                                        </li>
-
-                                        <li th:if="${currentPage < pageMax}">
-                                            <a class="fas fa-angle-right" href="shop-grid-full"></a>
-                                        </li>
-                                    </ul>
-                                    <!--====== End - Pagination ======-->
                                 </div>
+                            </div>
+                            <div class="u-s-p-y-60">
+
+                                <!--====== Pagination ======-->
+                                <ul class="shop-p__pagination">
+                                    <li th:each="page: ${#numbers.sequence(1, pageMax)}"
+                                        th:attr="class=${currentPage == page ? 'is-active' : ''}">
+                                        <a th:href="@{'/shop?page='+${page}+'&size='+${shows}+'&sortBy='+${sortBy}+'&desc='+${desc}}"
+                                           th:text="${page}"></a>
+                                    </li>
+
+                                    <li th:if="${currentPage < pageMax}">
+                                        <a class="fas fa-angle-right" href="shop-grid-full"></a>
+                                    </li>
+                                </ul>
+                                <!--====== End - Pagination ======-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--====== End - Section 1 ======-->
         </div>
-        <!--====== End - App Content ======-->
+        <!--====== End - Section 1 ======-->
     </div>
+    <!--====== End - App Content ======-->
+</div>
 </body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function function1(ele) {
+            console.log(ele);
+            let productID = ele.dataset.parameter1;
+            console.log(productID)
 
+            let listProduct = [[${ listProducts }]];
+
+            for (const element of listProduct) {
+                if (element.id == productID) {
+                    let modelquicklookname = document.getElementById('modelquicklookname');
+                    let modelquicklookprice = document.getElementById('modelquicklookprice');
+
+                    modelquicklookname.innerHTML = element.name;
+                    modelquicklookprice.innerHTML = element.price;
+                    break;
+                }
+            }
+        }
+
+
+        function changeSize(selectObject) {
+            let size = selectObject.value;
+            let soryBy = [[${ sortBy }]];
+            let desc = [[${ desc }]];
+            window.location.href = "/shop?page=" + 1 + "&size=" + size + "&sortBy=" + soryBy + "&desc=" + desc;
+        }
+
+        function changeSort(selectObject) {
+            let sortInfo = selectObject.value;
+            let size = [[${ shows }]];
+            let page = [[${ currentPage }]];
+            if (sortInfo.includes('desc')) {
+                window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo.split('_')[0] + "&desc=true";
+            } else {
+                window.location.href = "/shop?page=" + page + "&size=" + size + "&sortBy=" + sortInfo + "&desc=false";
+            }
+        }
+
+        function addToCart(ele) {
+            let productId = ele.dataset.productid;
+            let userEmail = [[${session.userEmail}]]
+            $.ajax({
+                url: "/addToCart",
+                type: "get", //send it through get method
+                data: {
+                    productId: productId,
+                    userEmail: userEmail
+                },
+                success: function (response) {
+                    alert("Oke bro");
+                },
+                error: function (xhr) {
+                    alert("Sai con mia gi roi");
+                }
+            });
+        }
+    </script>
+</th:block>
 </html>

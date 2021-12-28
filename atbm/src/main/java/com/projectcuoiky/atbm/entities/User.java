@@ -1,6 +1,7 @@
 package com.projectcuoiky.atbm.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class User implements Serializable {
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<CartItem> cartItems = new HashSet<>();
 
     public User() {
     }
@@ -80,6 +84,15 @@ public class User implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
     @Override

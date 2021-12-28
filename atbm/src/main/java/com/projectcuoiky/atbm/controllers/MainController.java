@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.projectcuoiky.atbm.dtos.ProductDto;
 import com.projectcuoiky.atbm.entities.Product;
 import com.projectcuoiky.atbm.entities.User;
+import com.projectcuoiky.atbm.service.CartItemService;
 import com.projectcuoiky.atbm.service.ProductService;
 import com.projectcuoiky.atbm.service.UserRegisterService;
 
@@ -18,11 +20,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 //@PreAuthorize("isAuthenticated()")
@@ -34,15 +32,20 @@ public class MainController {
     @Autowired
     private UserRegisterService userRegisterService;
 
+    @Autowired
+    private CartItemService cartItemService;
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = {"/", "home"})
-    public String Home() {
+    public String Home(HttpSession session) {
         return "views/Home";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/cart")
-    public String CartItemList() {
+    public String CartItemList(HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        System.out.println(userId);
         return "views/Cart";
     }
 
@@ -55,9 +58,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @ResponseBody
     public String postSignUp(@ModelAttribute("user") User user, Model model, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
         userRegisterService.register(user, getSiteURL(request));
-        model.addAttribute("message","wasSend");
+        model.addAttribute("message", "wasSend");
         return "success";
     }
 
@@ -68,7 +72,10 @@ public class MainController {
 
     @PreAuthorize("permitAll()")
     @RequestMapping("/signin")
-    public String signIn() {
+    public String signIn(@RequestParam(value = "invalid-session", defaultValue = "false") boolean invalidSession, final Model model) {
+        if (invalidSession == true) {
+            model.addAttribute("invalidSession", "You already have an action session. We do not allow multiple active sessions");
+        }
         System.out.println("hello");
         return "views/Signin";
     }
@@ -79,7 +86,7 @@ public class MainController {
         return "views/product-detail";
     }
 
-    // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @RequestMapping("/shop")
     public String shopPage(Model model, @RequestParam(required = false, name = "page") String Spage,
                            @RequestParam(required = false, name = "size") String Ssize,
@@ -110,13 +117,21 @@ public class MainController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/verify")
-    public String verifyUser(@Param("code") String code,Model model) {
+    public String verifyUser(@Param("code") String code, Model model) {
         if (userRegisterService.verify(code)) {
             return "redirect:/signin";
         } else {
-            model.addAttribute("message","verifyError");
+            model.addAttribute("message", "verifyError");
             return "views/Signup";
         }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @GetMapping("/addToCart")
+    @ResponseBody
+    public String addToCart(@RequestParam(required = true, name = "productId") int productId, @RequestParam(required = true, name = "userEmail") String userEmail) {
+        cartItemService.addToCart(productId, userEmail, 1);
+        return "success";
     }
 
 }

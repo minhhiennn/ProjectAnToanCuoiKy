@@ -2,7 +2,6 @@ use ProjectCuoiKy;
 go
 
 -- insert product
-<<<<<<< HEAD
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product1',210.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product2',120.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product11',420.0);
@@ -18,8 +17,6 @@ INSERT INTO product (product_discount_price,in_stock,product_name,product_price)
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product12',260.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product29',260.0);
 
-INSERT INTO users (email,password) values ('emlama','ssssssssss');
-=======
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product1',220.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product2',210.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product3',204.0);
@@ -42,6 +39,7 @@ INSERT INTO product (product_discount_price,in_stock,product_name,product_price)
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product20',290.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product21',210.0);
 INSERT INTO product (product_discount_price,in_stock,product_name,product_price) VALUES (24,200,'product22',220.0);
->>>>>>> f97533d3e0543594be3e758e2b254d933443494f
+
+INSERT INTO users (email,password) values ('emlama','ssssssssss');
 
 

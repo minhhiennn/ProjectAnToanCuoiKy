@@ -1,6 +1,7 @@
 package com.projectcuoiky.atbm.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import com.projectcuoiky.atbm.entities.CartItem;
 
@@ -10,10 +11,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    List<CartItem> findAll();
+//    List<CartItem> findAll();
+//
+//    Page<CartItem> findAll(Pageable pageable);
+//
+//    CartItem findCartItemById(Integer id);
 
-    Page<CartItem> findAll(Pageable pageable);
+    List<CartItem> findCartItemsByUserId(Integer userId);
 
-    CartItem findCartItemById(Integer id);
+    CartItem findCartItemByUserIdAndProductId(Integer userId, Integer productId);
 
 }

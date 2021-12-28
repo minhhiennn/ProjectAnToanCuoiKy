@@ -1,5 +1,6 @@
 package com.projectcuoiky.atbm.service;
 
+import com.projectcuoiky.atbm.entities.CustomUserDetail;
 import com.projectcuoiky.atbm.entities.Role;
 import com.projectcuoiky.atbm.entities.User;
 import com.projectcuoiky.atbm.repository.UserRepository;
@@ -25,7 +26,7 @@ public class UsersService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String e) throws UsernameNotFoundException {
+    public CustomUserDetail loadUserByUsername(String e) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(e);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -36,6 +37,13 @@ public class UsersService implements UserDetailsService {
         for (Role role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-        return new org.springframework.security.core.userdetails.User(user.email, user.password,user.isEnabled(),true,true,true,grantedAuthorities);
+
+        CustomUserDetail customUserDetail=new CustomUserDetail();
+        customUserDetail.setUser(user);
+        customUserDetail.setAuthorities(grantedAuthorities);
+
+        return customUserDetail;
+
+        //return new org.springframework.security.core.userdetails.User(user.email, user.password,user.isEnabled(),true,true,true,grantedAuthorities);
     }
 }
