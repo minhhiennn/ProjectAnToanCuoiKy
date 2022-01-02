@@ -1,4 +1,4 @@
-package com.projectcuoiky.atbm.security;
+package com.projectcuoiky.atbm.configure.security;
 
 import java.io.IOException;
 

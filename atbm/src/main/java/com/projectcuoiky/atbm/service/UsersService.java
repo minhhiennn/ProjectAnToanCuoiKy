@@ -43,7 +43,5 @@ public class UsersService implements UserDetailsService {
         customUserDetail.setAuthorities(grantedAuthorities);
 
         return customUserDetail;
-
-        //return new org.springframework.security.core.userdetails.User(user.email, user.password,user.isEnabled(),true,true,true,grantedAuthorities);
     }
 }

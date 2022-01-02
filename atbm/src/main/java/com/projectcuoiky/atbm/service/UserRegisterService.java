@@ -4,11 +4,11 @@ import com.projectcuoiky.atbm.entities.Role;
 import com.projectcuoiky.atbm.entities.User;
 import com.projectcuoiky.atbm.repository.RoleRepository;
 import com.projectcuoiky.atbm.repository.UserRepository;
+import com.projectcuoiky.atbm.configure.security.CustomPasswordEncoder;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -25,7 +25,7 @@ public class UserRegisterService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private CustomPasswordEncoder customPasswordEncoder;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -36,7 +36,7 @@ public class UserRegisterService {
 
     public void register(User user, String siteURL)
             throws UnsupportedEncodingException, MessagingException {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = customPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
         String randomCode = RandomString.make(64);

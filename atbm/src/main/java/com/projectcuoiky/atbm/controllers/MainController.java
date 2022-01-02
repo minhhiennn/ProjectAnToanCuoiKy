@@ -16,11 +16,14 @@ import com.projectcuoiky.atbm.service.ProductService;
 import com.projectcuoiky.atbm.service.UserRegisterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.LocaleResolver;
 
 @Controller
 //@PreAuthorize("isAuthenticated()")
@@ -37,7 +40,7 @@ public class MainController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = {"/", "home"})
-    public String Home(HttpSession session) {
+    public String Home(HttpServletRequest request) {
         return "views/Home";
     }
 

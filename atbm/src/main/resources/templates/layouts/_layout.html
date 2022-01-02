@@ -1,130 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--<head lang="en" th:replace="fragments/head :: head"></head>-->
 
 <body class="config">
 
-    <div class="preloader is-active">
-        <div class="preloader__wrap">
-            <img class="preloader__img" src="images/preloader.png" alt="">
-        </div>
+<div class="preloader is-active">
+    <div class="preloader__wrap">
+        <img class="preloader__img" src="images/preloader.png" alt="">
     </div>
+</div>
 
-    <div id="app">
+<div id="app">
 
-        <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
 
-        <div layout:fragment="content"></div>
+    <div layout:fragment="content"></div>
 
-        <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 
-    </div>
+</div>
 
-    <!--====== Vendor Js ======-->
-    <script th:src="@{/js/vendor.js}"></script>
+<!--====== Vendor Js ======-->
+<script th:src="@{/js/vendor.js}"></script>
 
-    <!--====== jQuery Shopnav plugin ======-->
-    <script th:src="@{/js/jquery.shopnav.js}"></script>
+<!--====== jQuery Shopnav plugin ======-->
+<script th:src="@{/js/jquery.shopnav.js}"></script>
 
-    <!--====== App ======-->
-    <script th:src="@{/js/app.js}"></script>
+<!--====== App ======-->
+<script th:src="@{/js/app.js}"></script>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <!-- Giờ tất cả các file js tự tạo nằm ở folder js/customJs.js   -->
-    <script th:inline="javascript">
+<!-- Giờ tất cả các file js tự tạo nằm ở folder js/customJs.js   -->
+<script th:inline="javascript">
 
-        function callPostMethodNoReresh(ele) {
-            let listParam = ele.dataset.parameter2;
-            let url = ele.dataset.parameter1;
-            // ấn vô thanh giảm số lượng
-            let minus = ele.dataset.parameter3 != undefined ? ele.dataset.parameter3 : undefined;
-            // ấn vô thanh giảm số lượng mà quantity <= 1 thì không xảy ra gì
-            let quantity = ele.dataset.parameter4 ? ele.dataset.parameter4 : undefined;
-            let listParamReal = listParam.replace("[", "").replace("]", "").replace(" ", "").split(",");
-            let map = {};
-            listParamReal.forEach(element => {
-                map[element.split("-")[0]] = element.split("-")[1];
-            });
-
-            if (quantity != undefined && quantity <= 1) {
-                return;
-            }
-
-            if (minus != undefined) {
-                map['minus'] = "true";
-            }
-
-            callAjaxPromise(url, map).done(function (response, status, jqXHR) {
-                let x = document.getElementsByClassName('preloader')[0];
-                x.classList.add('is-active');
-                if (status == 'success') {
-                    callAjaxPromise('getCartItemList', null).done(function (response, status, jqXHR) {
-                        if (status == 'success') {
-                            JSON.parse(response).forEach(element => {
-                                if (document.getElementById(`miniCart${element.id}`) != null) {
-                                    document.getElementById(`miniCartQuantity${element.id}`).innerHTML = element.quantity;
-                                    document.getElementById(`miniCartPrice${element.id}`).innerHTML = `$${element.quantity * element.product.price}`
-                                }
-
-                                if (document.getElementById(`cartModule${element.id}`) != null) {
-                                    document.getElementById(`cartModulePrice${element.id}`).innerHTML = `$${element.quantity * element.product.price}`
-                                }
-                            });
-                            setTimeout(() => {
-                                x.classList.remove('is-active')
-                            }, 500);
-                        }
-                    })
-                }
-            });
+    function changeLangEn() {
+        let x = [[${@langugesContext.getCurrentLanguages()}]];
+        if (x == 'en_US') {
+            return;
         }
-
-        function callAjaxPromise(url, map) {
-            let x = $.ajax({
-                type: "GET",
-                url: url,
-                data: map,
-                dataType: "text"
-            });
-            return x.promise();
+        let url_string = window.location.href;
+        let url = new URL(url_string);
+        let lang = url.searchParams.get("lang");
+        console.log(lang);
+        if (lang == null) {
+            window.location.replace(window.location.href + "?lang=en_US");
+        } else {
+            url.searchParams.set("lang", "en_US");
+            window.location.replace(url.toString());
         }
+    }
 
-        function removeCart(element) {
-            let productID = element.dataset.parameter2;
-            let cartID = element.dataset.parameter1;
-            $.get("removeToCart", { 'cartID': cartID, 'productID': productID },
-                function (response) {
-                    console.log(response);
-                    if (document.getElementById(`cartModule${response}`) != null) {
-                        document.getElementById(`cartModule${response}`).remove()
-                    }
-                }, 'text');
+    function changeLangVi() {
+        let x = [[${@langugesContext.getCurrentLanguages()}]];
+        if (x == 'vi') {
+            return;
         }
+        let url_string = window.location.href;
+        let url = new URL(url_string);
+        let lang = url.searchParams.get("lang");
+        console.log(lang);
+        if (lang == null) {
+            window.location.replace(window.location.href + "?lang=vi");
+        } else {
+            url.searchParams.set("lang", "vi");
+            window.location.replace(url.toString());
+        }
+    }
 
+</script>
 
-    </script>
+<th:block layout:fragment="script"></th:block>
+<!--====== Noscript ======-->
+<noscript>
+    <div class="app-setting">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="app-setting__wrap">
+                        <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
 
-    <th:block layout:fragment="script"></th:block>
-    <!--====== Noscript ======-->
-    <noscript>
-        <div class="app-setting">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="app-setting__wrap">
-                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
-
-                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a
+                        <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a
                                 JavaScript-capable browser.</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </noscript>
+    </div>
+</noscript>
 </body>
 
 </html>
